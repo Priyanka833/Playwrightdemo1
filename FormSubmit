@@ -1,0 +1,55 @@
+import{test, expect, Browser, Page, Locator} from '@playwright/test'
+import { webkit, chromium, firefox } from "@playwright/test"
+test('Form test', async()=> {
+   const browser:Browser =  await chromium.launch({headless: false});
+   const page:Page = await browser.newPage();
+   await page.goto("https://letcode.in/forms");
+   const fname:Locator= await page.locator('#firstname');
+   const lname:Locator=await page.locator('#lasttname');
+   const emailId:Locator = await page.locator('#email');
+
+  await fname.fill("Test");
+  await lname.fill("user001");
+  await emailId.clear();
+  await emailId.fill("testUser001@goggle.com");
+  
+  const countryDropDown = 'select'
+  await page.selectOption(countryDropDown, {value: '91'});
+
+  const phoneNumber:Locator= await page.locator('#Phno');
+  await phoneNumber.fill("9876543210");
+
+  const addressLine1:Locator= await page.locator('#Addl1');
+  await addressLine1.fill("plat no 123, abc colony");
+
+  const addressLine2:Locator = await page.locator('#Addl2');
+  await addressLine2.fill("landmark stu, pr village");
+
+  const state:Locator= await page.locator('#state');
+  await state.fill("TS");
+
+  const postalCode:Locator=await page.locator('#postalcode');
+  await postalCode.fill("123456")
+
+  const countryDD = '//html/body/app-root/app-forms/section[1]/div/div/div[1]/div/div/form/div[5]/div[2]/div/div/div/select';
+  await page.selectOption(countryDD, {label: 'India'});
+  
+  let date= "2003-11-21"
+  await page.fill('#Date',date);
+ 
+
+  const gender:Locator=await page.locator('#female');
+  await gender.check();
+
+  const agreeCondition:Locator=await page.locator('[type=checkbox]');
+  await agreeCondition.check();
+  await page.screenshot({path: 's1.png'});
+
+  await page.locator('[type=submit]').click();
+
+  await page.screenshot({path: 's2.png'});
+  
+
+});
+
+
